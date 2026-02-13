@@ -2,229 +2,259 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Surprise for You, Milady</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>A Valentine's Surprise for You, Milady</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Georgia', serif;
       min-height: 100vh;
-      background: linear-gradient(135deg, #1e0033, #2a004d, #4a0080);
+      background: linear-gradient(135deg, #0f001a, #1a0033, #330066, #4d0099);
       color: #fff;
       overflow-x: hidden;
+      line-height: 1.8;
     }
 
-    /* Login screen */
+    /* Login */
     #login-screen {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(15px);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
-      transition: opacity 0.8s ease;
+      z-index: 2000;
+      transition: opacity 1.2s ease;
     }
 
-    #login-screen.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+    #login-screen.hidden { opacity: 0; pointer-events: none; }
 
     .login-box {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 40px 30px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 60px 45px;
       width: 90%;
-      max-width: 380px;
+      max-width: 460px;
       text-align: center;
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .login-box h2 {
-      margin-bottom: 24px;
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      color: #ff9ecd;
+      font-size: clamp(2rem, 8vw, 3rem);
+      margin-bottom: 40px;
+      color: #ff69b4;
+      text-shadow: 0 0 25px rgba(255, 105, 180, 0.7);
     }
 
     .login-box input {
       width: 100%;
-      padding: 14px;
-      margin: 12px 0;
+      padding: 18px;
+      margin: 18px 0;
       border: none;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.15);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
       color: white;
-      font-size: 1.1rem;
+      font-size: clamp(1.1rem, 4.5vw, 1.3rem);
       text-align: center;
-    }
-
-    .login-box input::placeholder {
-      color: rgba(255,255,255,0.6);
-    }
-
-    .login-box button {
-      margin-top: 20px;
-      padding: 14px 40px;
-      background: #ff6bcb;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
       transition: all 0.3s;
     }
 
+    .login-box input:focus {
+      background: rgba(255,255,255,0.2);
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.5);
+      outline: none;
+    }
+
+    .login-box input::placeholder { color: rgba(255,255,255,0.5); }
+
+    .login-box button {
+      margin-top: 35px;
+      padding: 18px 60px;
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: clamp(1.2rem, 5vw, 1.4rem);
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.4s;
+      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
+      width: 100%;
+      max-width: 300px;
+    }
+
     .login-box button:hover {
-      background: #ff4db8;
-      transform: scale(1.05);
+      transform: scale(1.1);
+      box-shadow: 0 15px 40px rgba(255, 105, 180, 0.7);
     }
 
     .error {
-      color: #ff4d4d;
-      margin-top: 12px;
-      font-size: 0.95rem;
+      color: #ff9999;
+      margin-top: 20px;
+      font-size: 1.1rem;
     }
 
-    /* Main surprise */
+    /* Surprise */
     #surprise {
       display: none;
-      padding: 40px 20px;
-      min-height: 100vh;
+      padding: 80px 20px 160px;
       text-align: center;
       position: relative;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      color: #ff9ecd;
-      margin-bottom: 20px;
-      text-shadow: 0 0 30px rgba(255, 158, 205, 0.6);
-      animation: pulse 3s infinite;
+      font-size: clamp(4rem, 12vw, 6rem);
+      color: #ff69b4;
+      margin-bottom: 40px;
+      text-shadow: 0 0 60px rgba(255, 105, 180, 0.9);
+      animation: glowPulse 5s infinite alternate;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 30px rgba(255, 105, 180, 0.7); }
+      to   { text-shadow: 0 0 80px rgba(255, 105, 180, 1); }
     }
 
-    .message {
-      max-width: 90%;
-      margin: 40px auto;
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      line-height: 1.7;
-      color: #f0e6ff;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    .rose-section {
+      margin: 80px auto;
+      position: relative;
+      width: min(400px, 85vw);
+    }
+
+    .rose {
+      font-size: clamp(160px, 45vw, 240px);
+      animation: floatRose 8s infinite ease-in-out;
+      filter: drop-shadow(0 30px 60px rgba(255, 20, 147, 0.8));
+    }
+
+    @keyframes floatRose {
+      0%, 100% { transform: translateY(0) rotate(4deg); }
+      50% { transform: translateY(-40px) rotate(-4deg); }
+    }
+
+    .message-container {
+      max-width: 900px;
+      margin: 80px auto;
+      font-size: clamp(1.2rem, 4.5vw, 1.7rem);
+      line-height: 2;
+      color: #f5f0ff;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.7);
+      animation: fadeUp 2.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .highlight {
-      color: #ff9ecd;
+      color: #ff69b4;
       font-weight: bold;
-    }
-
-    .cake-container {
-      margin: 60px auto;
-      position: relative;
-      width: clamp(150px, 20vw, 300px);
-    }
-
-    .cake {
-      font-size: clamp(60px, 15vw, 120px);
-      animation: float 6s infinite ease-in-out;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+      text-shadow: 0 0 20px #ff69b4;
     }
 
     .signature {
-      margin-top: 100px;
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-      color: #ff9ecd;
+      margin-top: 140px;
+      font-size: clamp(2rem, 6.5vw, 3rem);
+      color: #ff69b4;
       font-style: italic;
+      text-shadow: 0 0 35px rgba(255, 105, 180, 0.8);
     }
 
     .heart {
-      color: #ff4d4d;
-      font-size: clamp(1.2rem, 3vw, 2.2rem);
-      animation: heartbeat 1.4s infinite;
+      color: #ff1493;
+      font-size: clamp(2.5rem, 8vw, 3.8rem);
+      animation: heartbeat 1.2s infinite;
     }
 
     @keyframes heartbeat {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
+      50% { transform: scale(1.3); }
     }
 
-    /* Confetti canvas */
-    #confetti-canvas {
+    /* Canvases */
+    #confetti-canvas, #hearts-canvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: -1;
     }
+
+    @media (max-width: 600px) {
+      .login-box { padding: 40px 25px; }
+      .message-container { padding: 0 10px; }
+      .rose-section { margin: 60px auto; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Confetti canvas -->
+  <!-- Canvases -->
   <canvas id="confetti-canvas"></canvas>
+  <canvas id="hearts-canvas"></canvas>
 
-  <!-- Login screen -->
+  <!-- Login -->
   <div id="login-screen">
     <div class="login-box">
-      <h2>Welcome, Milady</h2>
+      <h2>A Valentine's Gift for My Milady</h2>
       <input type="text" id="username" placeholder="Username" autocomplete="off">
       <input type="password" id="password" placeholder="Password" autocomplete="off">
-      <button onclick="checkLogin()">Open Your Surprise</button>
+      <button onclick="checkLogin()">Unlock Your Valentine's Surprise</button>
       <div id="error" class="error"></div>
     </div>
   </div>
 
-  <!-- Surprise content -->
+  <!-- Surprise -->
   <div id="surprise">
-    <h1>Happy Birthday, Milady!!!</h1>
+    <h1>Happy Valentine's Day, My Love!</h1>
 
-    <div class="cake-container">
-      <div class="cake">🎂</div>
+    <div class="rose-section">
+      <div class="rose">🌹</div>
     </div>
 
-    <div class="message">
-      I know it's late — your birthday was February 1st and I couldn't give you anything because I'm so far away in another country... but I hope this little surprise reaches your heart.<br><br>
+    <div class="message-container">
+      My dearest Savannah,<br><br>
 
-      I was the most <span class="highlight">happy person</span> when I met you, milady.<br>
-      You were the stars on my lonely night.<br>
-      You brought light, warmth, and love into my world when everything felt dark and empty.<br><br>
+      Even though we're oceans apart, my heart is always with you — beating to the rhythm of your name.<br>
+      On this Valentine's Day, I want you to know how deeply, madly, and truly I love you.<br><br>
 
-      Every message, every call, every little moment with you feels like a gift.<br>
-      You are my treasure, my safe place, my everything.<br><br>
+      You are the <span class="highlight">light</span> that guides me through every day and night.<br>
+      From the moment we met, you turned my world from gray to a rainbow of colors.<br>
+      Your smile, your laugh, your kind heart — they are my greatest treasures.<br><br>
 
-      I wish I could hug you right now and celebrate with you in person.<br>
-      But until I can, please accept this digital hug and all my love.<br>
-      You deserve the world, and I'm working hard so one day I can give it to you.<br><br>
+      I miss you more than words can say, but every message from you feels like a warm embrace across the miles.<br>
+      You make the distance feel smaller, the days brighter, and my love stronger.<br><br>
 
-      <strong>Happy late birthday, my beautiful Savannah.</strong><br>
-      I love you more than words can ever say. ♥
+      One day, I'll hold you in my arms, whisper "I love you" in your ear, and give you all the kisses I've saved up.<br>
+      Until then, please accept this little surprise as a piece of my heart — wrapped in love, just for you.<br><br>
+
+      <strong>Happy Valentine's Day, my beautiful milady.</strong><br>
+      You are my forever, my everything, my one and only.<br>
+      I love you endlessly. ♥
     </div>
 
     <div class="signature">
-      by - your beloved treasure knight <span class="heart">♥</span>
+      With all my love,<br>
+      your beloved treasure knight <span class="heart">♥</span>
     </div>
   </div>
 
   <script>
-    // Simple login check
+    // Login
     function checkLogin() {
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value.trim();
@@ -234,12 +264,13 @@
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('surprise').style.display = 'block';
         startConfetti();
+        startFloatingHearts();
       } else {
-        error.textContent = "Wrong username or password. Try again, milady.";
+        error.textContent = "Wrong credentials... try again, my love ♡";
       }
     }
 
-    // Confetti effect
+    // Confetti
     function startConfetti() {
       const canvas = document.getElementById('confetti-canvas');
       const ctx = canvas.getContext('2d');
@@ -247,39 +278,39 @@
       canvas.height = window.innerHeight;
 
       const confetti = [];
-      const colors = ['#ff6bcb', '#58a6ff', '#FFD700', '#ff4d4d', '#79c0ff'];
+      const colors = ['#ffb6c1', '#ff69b4', '#ff1493', '#58a6ff', '#FFD700', '#79c0ff'];
 
-      for (let i = 0; i < 150; i++) {
+      for (let i = 0; i < 300; i++) {
         confetti.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height - canvas.height,
-          r: Math.random() * 6 + 2,
-          d: Math.random() * 150 + 50,
+          r: Math.random() * 10 + 4,
+          d: Math.random() * 250 + 80,
           color: colors[Math.floor(Math.random() * colors.length)],
-          tilt: Math.random() * 10 - 5,
+          tilt: Math.random() * 15 - 7,
           tiltAngle: 0,
-          tiltAngleIncremental: Math.random() * 0.07 + 0.05
+          tiltAngleInc: Math.random() * 0.1 + 0.05
         });
       }
 
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         confetti.forEach((c, i) => {
-          c.tiltAngle += c.tiltAngleIncremental;
+          c.tiltAngle += c.tiltAngleInc;
           c.y += (Math.cos(c.tiltAngle) + 1 + c.r / 2) / 2;
-          c.x += Math.sin(c.tiltAngle) * 1.5;
+          c.x += Math.sin(c.tiltAngle) * 2.5;
 
           if (c.y > canvas.height) {
             confetti.splice(i, 1);
             confetti.push({
               x: Math.random() * canvas.width,
-              y: -10,
-              r: Math.random() * 6 + 2,
-              d: Math.random() * 150 + 50,
+              y: -20,
+              r: Math.random() * 10 + 4,
+              d: Math.random() * 250 + 80,
               color: colors[Math.floor(Math.random() * colors.length)],
-              tilt: Math.random() * 10 - 5,
+              tilt: Math.random() * 15 - 7,
               tiltAngle: 0,
-              tiltAngleIncremental: Math.random() * 0.07 + 0.05
+              tiltAngleInc: Math.random() * 0.1 + 0.05
             });
           }
 
@@ -287,21 +318,54 @@
           ctx.lineWidth = c.r;
           ctx.strokeStyle = c.color;
           ctx.moveTo(c.x + c.tilt + c.r / 2, c.y);
-          ctx.lineTo(c.x + c.tilt - c.r / 2, c.y + c.r);
+          ctx.lineTo(c.x + c.tilt - c.r / 2, c.y + c.r * 2);
           ctx.stroke();
         });
-
         requestAnimationFrame(draw);
       }
-
       draw();
     }
 
-    // Resize canvas on window resize
-    window.addEventListener('resize', () => {
-      const canvas = document.getElementById('confetti-canvas');
+    // Floating hearts
+    function startFloatingHearts() {
+      const canvas = document.getElementById('hearts-canvas');
+      const ctx = canvas.getContext('2d');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+
+      const hearts = [];
+      for (let i = 0; i < 50; i++) {
+        hearts.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 40 + 25,
+          speed: Math.random() * 1.5 + 0.8,
+          opacity: Math.random() * 0.6 + 0.4
+        });
+      }
+
+      function drawHearts() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        hearts.forEach(h => {
+          ctx.globalAlpha = h.opacity;
+          ctx.fillStyle = '#ff4d4d';
+          ctx.font = `${h.size}px Arial`;
+          ctx.fillText('♥', h.x, h.y);
+          h.y -= h.speed;
+          h.x += Math.sin(h.y * 0.01) * 2;
+          if (h.y < -50) h.y = canvas.height + 50;
+        });
+        requestAnimationFrame(drawHearts);
+      }
+      drawHearts();
+    }
+
+    // Resize canvases
+    window.addEventListener('resize', () => {
+      const c1 = document.getElementById('confetti-canvas');
+      const c2 = document.getElementById('hearts-canvas');
+      c1.width = c2.width = window.innerWidth;
+      c1.height = c2.height = window.innerHeight;
     });
   </script>
 </body>
